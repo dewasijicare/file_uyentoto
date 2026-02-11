@@ -4,59 +4,52 @@
 
         // --- 1. PENGATURAN LINK & GAMBAR ---
         const config = {
-            linkRTP: "/", 
+            linkRTP: "https://rtpmbak4d1o.mainplay.click/", 
             imgRTP: "https://cdn.jsdelivr.net/gh/dewasijicare/file_uyentoto@53d447bf4ad0c8dec5b75118f6159edc54bdb2a8/RTP.webp",
             
-            linkWA: "/",
+            linkWA: "https://wa.me/6283191991449",
             imgWA: "https://cdn.jsdelivr.net/gh/dewasijicare/file_uyentoto@53d447bf4ad0c8dec5b75118f6159edc54bdb2a8/WA.webp",
             
-            linkPrediksi: "/",
+            linkPrediksi: "https://syair.mbaksyair.it.com/",
             imgPrediksi: "https://cdn.jsdelivr.net/gh/dewasijicare/file_uyentoto@53d447bf4ad0c8dec5b75118f6159edc54bdb2a8/PREDIKSI-TOGEL.webp"
         };
 
-        // --- 2. INJEKSI CSS (STYLE BARU) ---
+        // --- 2. INJEKSI CSS ---
         const widgetStyles = `
-            /* Container Utama (Wrapper) */
+            /* Container Utama */
             #mbak-sidebar-container {
                 position: fixed;
                 left: 0;
-                top: 50%; /* Posisi Vertikal Tengah */
-                transform: translateY(-50%); /* Center vertical alignment */
+                bottom: 30px; /* POSISI DI BAWAH KIRI */
                 z-index: 99999;
                 display: flex;
-                align-items: center; /* Sejajarkan menu dan tombol */
-                transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Animasi halus */
+                align-items: stretch; /* AGAR TOMBOL MENGIKUTI TINGGI ICON */
+                transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
                 font-family: sans-serif;
             }
 
-            /* State Tertutup: Geser ke kiri sebesar lebar menu, sisakan tombol */
+            /* State Tertutup: Geser ke kiri sebesar lebar area icon (60px) */
             #mbak-sidebar-container.closed {
-                transform: translateY(-50%) translateX(-70px); /* -70px sesuai lebar menu */
+                transform: translateX(-60px); 
             }
 
-            /* Bagian Hitam (Tempat Icon) */
+            /* Area Icon (Tanpa Background) */
             .mbak-sidebar-content {
-                background-color: #1a1a1a; /* Warna latar gelap sesuai contoh */
-                padding: 15px 10px;
+                background: transparent; /* BACKGROUND HILANG */
                 display: flex;
                 flex-direction: column;
-                gap: 15px;
-                width: 70px; /* Lebar area menu */
+                gap: 5px; /* Jarak antar icon */
+                width: 60px; /* Lebar area icon */
                 box-sizing: border-box;
-                border-top-right-radius: 5px;
-                border-bottom-right-radius: 5px;
-                /* HILANGKAN SHADOW sesuai request */
-                box-shadow: none !important; 
+                padding-bottom: 5px;
             }
 
-            /* Styling Gambar Icon */
+            /* Gambar Icon */
             .mbak-sidebar-content a img {
                 width: 100%;
                 height: auto;
                 display: block;
                 border-radius: 5px;
-                /* HILANGKAN SHADOW pada gambar */
-                box-shadow: none !important; 
                 transition: transform 0.2s;
             }
             
@@ -66,9 +59,9 @@
 
             /* Tombol Toggle (Batang Biru) */
             #mbak-sidebar-toggle {
-                background-color: #00aaff; /* Warna Biru sesuai contoh */
-                width: 25px;
-                height: 120px; /* Tinggi tombol */
+                background-color: #00aaff; /* Warna Biru */
+                width: 30px; /* Lebar tombol */
+                /* Tinggi otomatis menyesuaikan (stretch) */
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -78,7 +71,6 @@
                 color: #fff;
                 font-weight: bold;
                 font-size: 14px;
-                box-shadow: none; /* Tanpa shadow */
             }
             
             /* Panah Indikator */
@@ -97,7 +89,7 @@
         styleElement.innerHTML = widgetStyles;
         document.head.appendChild(styleElement);
 
-        // --- 3. INJEKSI HTML (STRUKTUR SIDEBAR) ---
+        // --- 3. INJEKSI HTML ---
         const widgetHtml = `
             <div id="mbak-sidebar-container">
                 <div class="mbak-sidebar-content">
@@ -112,18 +104,19 @@
                     </a>
                 </div>
 
-                <div id="mbak-sidebar-toggle" title="Buka/Tutup Menu">
-                    <span id="mbak-toggle-arrow">◀</span> </div>
+                <div id="mbak-sidebar-toggle" title="Buka/Tutup">
+                    <span id="mbak-toggle-arrow">◀</span>
+                </div>
             </div>
         `;
 
         document.body.insertAdjacentHTML('beforeend', widgetHtml);
 
-        // --- 4. LOGIKA SLIDE (JAVASCRIPT) ---
+        // --- 4. LOGIKA SLIDE ---
         const container = document.getElementById('mbak-sidebar-container');
         const toggleBtn = document.getElementById('mbak-sidebar-toggle');
         
-        // Cek LocalStorage agar posisi terakhir tersimpan (Optional, agar user tidak terganggu)
+        // Cek LocalStorage
         const isClosed = localStorage.getItem('mbakSidebarClosed') === 'true';
         if (isClosed) {
             container.classList.add('closed');
@@ -134,7 +127,6 @@
             toggleBtn.addEventListener('click', function() {
                 container.classList.toggle('closed');
                 
-                // Simpan status buka/tutup ke browser user
                 if (container.classList.contains('closed')) {
                     localStorage.setItem('mbakSidebarClosed', 'true');
                 } else {
