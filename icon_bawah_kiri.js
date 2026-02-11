@@ -20,28 +20,28 @@
             #mbak-sidebar-container {
                 position: fixed;
                 left: 0;
-                bottom: 30px; /* POSISI DI BAWAH KIRI */
+                bottom: 30px; /* Posisi Kiri Bawah */
                 z-index: 99999;
                 display: flex;
-                align-items: stretch; /* AGAR TOMBOL MENGIKUTI TINGGI ICON */
+                align-items: stretch; /* Agar tombol mengikuti tinggi icon */
                 transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
                 font-family: sans-serif;
             }
 
-            /* State Tertutup: Geser ke kiri sebesar lebar area icon (60px) */
+            /* State Tertutup: Geser ke kiri sebesar lebar area icon (80px) */
             #mbak-sidebar-container.closed {
-                transform: translateX(-60px); 
+                transform: translateX(-80px); 
             }
 
-            /* Area Icon (Tanpa Background) */
+            /* Area Icon */
             .mbak-sidebar-content {
-                background: transparent; /* BACKGROUND HILANG */
+                background: transparent;
                 display: flex;
                 flex-direction: column;
-                gap: 5px; /* Jarak antar icon */
-                width: 60px; /* Lebar area icon */
+                gap: 15px; /* JARAK ANTAR ICON (VERTIKAL) */
+                padding: 10px; /* JARAK KELILING (KANAN KIRI ATAS BAWAH) */
+                width: 80px; /* Lebar area diperbesar agar muat padding */
                 box-sizing: border-box;
-                padding-bottom: 5px;
             }
 
             /* Gambar Icon */
@@ -57,11 +57,10 @@
                 transform: scale(1.1);
             }
 
-            /* Tombol Toggle (Batang Biru) */
+            /* Tombol Toggle (Batang Merah) */
             #mbak-sidebar-toggle {
-                background-color: #00aaff; /* Warna Biru */
-                width: 30px; /* Lebar tombol */
-                /* Tinggi otomatis menyesuaikan (stretch) */
+                background-color: #ff0000; /* UBAH JADI MERAH */
+                width: 30px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
