@@ -20,7 +20,7 @@
             #mbak-sidebar-container {
                 position: fixed;
                 left: 0;
-                bottom: 50px; /* Posisi Kiri Bawah */
+                bottom: 100px; /* Posisi Kiri Bawah */
                 z-index: 99999;
                 display: flex;
                 align-items: stretch; /* Agar tombol mengikuti tinggi icon */
@@ -136,4 +136,5 @@
     });
 
 })();
+
 
