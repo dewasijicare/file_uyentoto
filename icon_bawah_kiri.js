@@ -28,9 +28,9 @@
                 font-family: sans-serif;
             }
 
-            /* State Tertutup: Geser ke kiri sebesar lebar area icon (80px) */
+            /* State Tertutup: Geser ke kiri sebesar lebar area icon (65px) */
             #mbak-sidebar-container.closed {
-                transform: translateX(-80px); 
+                transform: translateX(-65px); 
             }
 
             /* Area Icon */
@@ -38,9 +38,9 @@
                 background: transparent;
                 display: flex;
                 flex-direction: column;
-                gap: 15px; /* JARAK ANTAR ICON (VERTIKAL) */
-                padding: 10px; /* JARAK KELILING (KANAN KIRI ATAS BAWAH) */
-                width: 80px; /* Lebar area diperbesar agar muat padding */
+                gap: 10px; /* JARAK ANTAR ICON LEBIH RAPAT (sebelumnya 15px) */
+                padding: 8px; /* PADDING LEBIH KECIL (sebelumnya 10px) */
+                width: 65px; /* LEBAR ICON LEBIH KECIL (sebelumnya 80px) */
                 box-sizing: border-box;
             }
 
@@ -59,8 +59,8 @@
 
             /* Tombol Toggle (Batang Merah) */
             #mbak-sidebar-toggle {
-                background-color: #ff0000; /* UBAH JADI MERAH */
-                width: 30px;
+                background-color: #ff0000; /* Merah */
+                width: 25px; /* Lebar tombol sedikit disesuaikan */
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -136,5 +136,3 @@
     });
 
 })();
-
-
