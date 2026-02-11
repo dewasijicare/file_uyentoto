@@ -2,7 +2,7 @@
     
     document.addEventListener('DOMContentLoaded', function() {
 
-        // --- 1. PENGATURAN LINK & GAMBAR (Bisa Diedit Disini) ---
+        // --- 1. PENGATURAN LINK & GAMBAR ---
         const config = {
             linkRTP: "/", 
             imgRTP: "https://cdn.jsdelivr.net/gh/dewasijicare/file_uyentoto@53d447bf4ad0c8dec5b75118f6159edc54bdb2a8/RTP.webp",
@@ -13,138 +13,135 @@
             linkPrediksi: "/",
             imgPrediksi: "https://cdn.jsdelivr.net/gh/dewasijicare/file_uyentoto@53d447bf4ad0c8dec5b75118f6159edc54bdb2a8/PREDIKSI-TOGEL.webp"
         };
-        // --- Selesai Pengaturan ---
 
-
-        // --- 2. INJEKSI CSS (STYLE) ---
+        // --- 2. INJEKSI CSS (STYLE BARU) ---
         const widgetStyles = `
-            #mbak-widget-container {
+            /* Container Utama (Wrapper) */
+            #mbak-sidebar-container {
                 position: fixed;
-                bottom: 20px;
-                left: 10px;
+                left: 0;
+                top: 50%; /* Posisi Vertikal Tengah */
+                transform: translateY(-50%); /* Center vertical alignment */
                 z-index: 99999;
                 display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
+                align-items: center; /* Sejajarkan menu dan tombol */
+                transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Animasi halus */
                 font-family: sans-serif;
             }
 
-            .mbak-widget-icons {
+            /* State Tertutup: Geser ke kiri sebesar lebar menu, sisakan tombol */
+            #mbak-sidebar-container.closed {
+                transform: translateY(-50%) translateX(-70px); /* -70px sesuai lebar menu */
+            }
+
+            /* Bagian Hitam (Tempat Icon) */
+            .mbak-sidebar-content {
+                background-color: #1a1a1a; /* Warna latar gelap sesuai contoh */
+                padding: 15px 10px;
                 display: flex;
                 flex-direction: column;
-                gap: 8px;
-                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efek membal */
-                transform-origin: bottom left;
-                opacity: 1;
-                max-height: 500px;
-                overflow: visible;
+                gap: 15px;
+                width: 70px; /* Lebar area menu */
+                box-sizing: border-box;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                /* HILANGKAN SHADOW sesuai request */
+                box-shadow: none !important; 
             }
 
-            /* State saat menu ditutup (Hidden) */
-            .mbak-widget-icons.closed {
-                opacity: 0;
-                transform: translateY(20px) scale(0.8);
-                pointer-events: none;
-                max-height: 0;
-            }
-
-            .mbak-widget-icons a img {
-                width: 50px;
+            /* Styling Gambar Icon */
+            .mbak-sidebar-content a img {
+                width: 100%;
                 height: auto;
                 display: block;
                 border-radius: 5px;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-                transition: transform 0.2s ease;
+                /* HILANGKAN SHADOW pada gambar */
+                box-shadow: none !important; 
+                transition: transform 0.2s;
+            }
+            
+            .mbak-sidebar-content a img:hover {
+                transform: scale(1.1);
             }
 
-            .mbak-widget-icons a img:hover {
-                transform: scale(1.15);
-            }
-
-            /* Tombol Toggle Bulat */
-            #mbak-widget-toggle-btn {
-                background-color: #000;
-                color: #fff;
-                border: 2px solid #fff;
-                border-radius: 50%;
-                width: 40px;
-                height: 40px;
+            /* Tombol Toggle (Batang Biru) */
+            #mbak-sidebar-toggle {
+                background-color: #00aaff; /* Warna Biru sesuai contoh */
+                width: 25px;
+                height: 120px; /* Tinggi tombol */
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
-                box-shadow: 0 3px 8px rgba(0,0,0,0.6);
-                outline: none;
-                margin-top: 5px;
-                font-size: 20px;
-                line-height: 1;
-                transition: background 0.3s, transform 0.3s;
-                padding: 0;
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+                color: #fff;
+                font-weight: bold;
+                font-size: 14px;
+                box-shadow: none; /* Tanpa shadow */
+            }
+            
+            /* Panah Indikator */
+            #mbak-toggle-arrow {
+                display: inline-block;
+                transition: transform 0.4s;
             }
 
-            #mbak-widget-toggle-btn:hover {
-                background-color: #333;
-                transform: rotate(90deg);
+            /* Putar panah saat tertutup */
+            #mbak-sidebar-container.closed #mbak-toggle-arrow {
+                transform: rotate(180deg); 
             }
         `;
 
-        // Pasang CSS ke Head
         const styleElement = document.createElement('style');
         styleElement.innerHTML = widgetStyles;
         document.head.appendChild(styleElement);
 
-
-        // --- 3. INJEKSI HTML (ELEMENT) ---
+        // --- 3. INJEKSI HTML (STRUKTUR SIDEBAR) ---
         const widgetHtml = `
-            <div id="mbak-widget-container">
-                <div class="mbak-widget-icons" id="mbak-widget-list">
-                    
+            <div id="mbak-sidebar-container">
+                <div class="mbak-sidebar-content">
                     <a href="${config.linkRTP}" target="_blank" title="RTP Slot">
                         <img src="${config.imgRTP}" alt="RTP">
                     </a>
-
                     <a href="${config.linkWA}" target="_blank" title="WhatsApp">
                         <img src="${config.imgWA}" alt="WA">
                     </a>
-
                     <a href="${config.linkPrediksi}" target="_blank" title="Prediksi Togel">
                         <img src="${config.imgPrediksi}" alt="Prediksi">
                     </a>
-
                 </div>
 
-                <button id="mbak-widget-toggle-btn" title="Menu">&times;</button>
+                <div id="mbak-sidebar-toggle" title="Buka/Tutup Menu">
+                    <span id="mbak-toggle-arrow">◀</span> </div>
             </div>
         `;
 
-        // Pasang HTML ke Body
         document.body.insertAdjacentHTML('beforeend', widgetHtml);
 
+        // --- 4. LOGIKA SLIDE (JAVASCRIPT) ---
+        const container = document.getElementById('mbak-sidebar-container');
+        const toggleBtn = document.getElementById('mbak-sidebar-toggle');
+        
+        // Cek LocalStorage agar posisi terakhir tersimpan (Optional, agar user tidak terganggu)
+        const isClosed = localStorage.getItem('mbakSidebarClosed') === 'true';
+        if (isClosed) {
+            container.classList.add('closed');
+            document.getElementById('mbak-toggle-arrow').style.transform = "rotate(180deg)";
+        }
 
-        // --- 4. LOGIKA JAVASCRIPT (INTERAKSI) ---
-        const toggleBtn = document.getElementById('mbak-widget-toggle-btn');
-        const iconList = document.getElementById('mbak-widget-list');
-
-        if (toggleBtn && iconList) {
+        if (toggleBtn && container) {
             toggleBtn.addEventListener('click', function() {
-                // Cek apakah class 'closed' ada
-                const isClosed = iconList.classList.contains('closed');
-
-                if (isClosed) {
-                    // JIKA SEDANG TERTUTUP -> BUKA
-                    iconList.classList.remove('closed');
-                    toggleBtn.innerHTML = "&times;"; // Simbol X
-                    toggleBtn.style.transform = "rotate(0deg)";
+                container.classList.toggle('closed');
+                
+                // Simpan status buka/tutup ke browser user
+                if (container.classList.contains('closed')) {
+                    localStorage.setItem('mbakSidebarClosed', 'true');
                 } else {
-                    // JIKA SEDANG TERBUKA -> TUTUP
-                    iconList.classList.add('closed');
-                    toggleBtn.innerHTML = "&#9776;"; // Simbol Garis Tiga (Hamburger)
-                    toggleBtn.style.transform = "rotate(180deg)";
+                    localStorage.setItem('mbakSidebarClosed', 'false');
                 }
             });
         }
+    });
 
-    }); // Akhir DOMContentLoaded
-
-})(); // Akhir IIFE
+})();
