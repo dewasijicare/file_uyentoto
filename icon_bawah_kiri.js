@@ -38,9 +38,9 @@
                 background: transparent;
                 display: flex;
                 flex-direction: column;
-                gap: 10px; /* JARAK ANTAR ICON LEBIH RAPAT (sebelumnya 15px) */
-                padding: 8px; /* PADDING LEBIH KECIL (sebelumnya 10px) */
-                width: 65px; /* LEBAR ICON LEBIH KECIL (sebelumnya 80px) */
+                gap: 10px; 
+                padding: 8px; 
+                width: 65px; 
                 box-sizing: border-box;
             }
 
@@ -60,7 +60,7 @@
             /* Tombol Toggle (Batang Merah) */
             #mbak-sidebar-toggle {
                 background-color: #ff0000; /* Merah */
-                width: 25px; /* Lebar tombol sedikit disesuaikan */
+                width: 25px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -76,9 +76,10 @@
             #mbak-toggle-arrow {
                 display: inline-block;
                 transition: transform 0.4s;
+                transform: rotate(0deg); /* Default: Menghadap Kiri */
             }
 
-            /* Putar panah saat tertutup */
+            /* Putar panah saat tertutup (Menghadap Kanan) */
             #mbak-sidebar-container.closed #mbak-toggle-arrow {
                 transform: rotate(180deg); 
             }
@@ -89,6 +90,7 @@
         document.head.appendChild(styleElement);
 
         // --- 3. INJEKSI HTML ---
+        // Perhatikan simbol panah di bawah adalah '◀' (Kiri)
         const widgetHtml = `
             <div id="mbak-sidebar-container">
                 <div class="mbak-sidebar-content">
@@ -119,7 +121,8 @@
         const isClosed = localStorage.getItem('mbakSidebarClosed') === 'true';
         if (isClosed) {
             container.classList.add('closed');
-            document.getElementById('mbak-toggle-arrow').style.transform = "rotate(180deg)";
+            // Pastikan panah diputar jika load pertamanya tertutup
+            /* CSS akan menangani rotasi, tapi kita pastikan elemen ada */
         }
 
         if (toggleBtn && container) {
