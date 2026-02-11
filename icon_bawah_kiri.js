@@ -4,13 +4,13 @@
 
         // --- 1. PENGATURAN LINK & GAMBAR ---
         const config = {
-            linkRTP: "https://rtpmbak4d1o.mainplay.click/", 
+            linkRTP: "/", 
             imgRTP: "https://cdn.jsdelivr.net/gh/dewasijicare/file_uyentoto@53d447bf4ad0c8dec5b75118f6159edc54bdb2a8/RTP.webp",
             
-            linkWA: "https://wa.me/6283191991449",
+            linkWA: "/",
             imgWA: "https://cdn.jsdelivr.net/gh/dewasijicare/file_uyentoto@53d447bf4ad0c8dec5b75118f6159edc54bdb2a8/WA.webp",
             
-            linkPrediksi: "https://syair.mbaksyair.it.com/",
+            linkPrediksi: "/",
             imgPrediksi: "https://cdn.jsdelivr.net/gh/dewasijicare/file_uyentoto@53d447bf4ad0c8dec5b75118f6159edc54bdb2a8/PREDIKSI-TOGEL.webp"
         };
 
@@ -20,7 +20,7 @@
             #mbak-sidebar-container {
                 position: fixed;
                 left: 0;
-                bottom: 30px; /* Posisi Kiri Bawah */
+                bottom: 50px; /* Posisi Kiri Bawah */
                 z-index: 99999;
                 display: flex;
                 align-items: stretch; /* Agar tombol mengikuti tinggi icon */
@@ -136,3 +136,4 @@
     });
 
 })();
+
