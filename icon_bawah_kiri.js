@@ -23,12 +23,12 @@
                 bottom: 100px; /* Posisi Kiri Bawah */
                 z-index: 99999;
                 display: flex;
-                align-items: stretch; /* Agar tombol mengikuti tinggi icon */
+                align-items: stretch; 
                 transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
                 font-family: sans-serif;
             }
 
-            /* State Tertutup: Geser ke kiri sebesar lebar area icon (65px) */
+            /* State Tertutup: Geser ke kiri */
             #mbak-sidebar-container.closed {
                 transform: translateX(-65px); 
             }
@@ -76,10 +76,10 @@
             #mbak-toggle-arrow {
                 display: inline-block;
                 transition: transform 0.4s;
-                transform: rotate(0deg); /* Default: Menghadap Kiri */
+                transform: rotate(0deg); /* Default (Open): Kiri */
             }
 
-            /* Putar panah saat tertutup (Menghadap Kanan) */
+            /* Putar panah saat tertutup (Closed): Jadi Kanan */
             #mbak-sidebar-container.closed #mbak-toggle-arrow {
                 transform: rotate(180deg); 
             }
@@ -90,9 +90,9 @@
         document.head.appendChild(styleElement);
 
         // --- 3. INJEKSI HTML ---
-        // Perhatikan simbol panah di bawah adalah '◀' (Kiri)
+        // Perhatikan class="closed" ditambahkan di awal agar default tertutup
         const widgetHtml = `
-            <div id="mbak-sidebar-container">
+            <div id="mbak-sidebar-container" class="closed">
                 <div class="mbak-sidebar-content">
                     <a href="${config.linkRTP}" target="_blank" title="RTP Slot">
                         <img src="${config.imgRTP}" alt="RTP">
@@ -117,18 +117,19 @@
         const container = document.getElementById('mbak-sidebar-container');
         const toggleBtn = document.getElementById('mbak-sidebar-toggle');
         
-        // Cek LocalStorage
-        const isClosed = localStorage.getItem('mbakSidebarClosed') === 'true';
-        if (isClosed) {
-            container.classList.add('closed');
-            // Pastikan panah diputar jika load pertamanya tertutup
-            /* CSS akan menangani rotasi, tapi kita pastikan elemen ada */
-        }
+        // Cek LocalStorage: Hanya buka jika user TERAKHIR KALI meninggalkannya dalam keadaan TERBUKA
+        const shouldBeOpen = localStorage.getItem('mbakSidebarClosed') === 'false';
+        
+        if (shouldBeOpen) {
+            container.classList.remove('closed'); // Buka jika user sebelumnya membuka
+        } 
+        // Jika tidak ada history (first visit), class "closed" di HTML tetap aktif (Default Tertutup)
 
         if (toggleBtn && container) {
             toggleBtn.addEventListener('click', function() {
                 container.classList.toggle('closed');
                 
+                // Simpan status
                 if (container.classList.contains('closed')) {
                     localStorage.setItem('mbakSidebarClosed', 'true');
                 } else {
