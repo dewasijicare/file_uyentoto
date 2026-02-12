@@ -7,28 +7,27 @@
             bgMain: "#f4f4f4",        
             bgCard: "#ffffff",        
             
-            // --- WARNA DEFAULT (SAAT TERTUTUP/NORMAL) ---
-            textDefault: "#d32f2f",     // MERAH (Nama Pasaran)
-            textDate: "#95a5a6",        // Abu Soft
-            textResultDefault: "#111111", // HITAM GELAP (Angka Keluaran Default & History)
+            // --- WARNA DEFAULT (SAAT TERTUTUP) ---
+            textPasaran: "#d32f2f",     // MERAH (Nama Pasaran)
+            textDate: "#888888",        // Abu
+            textResult: "#000000",      // HITAM PEKAT (FORCE BLACK)
             
-            // --- WARNA SAAT AKTIF (DIKLIK/TERBUKA) ---
-            bgActive: "#1a1a1a",        // Background Hitam
-            textActiveLight: "#ffffff", // Teks Putih
-            textActiveGold: "#ffc107",  // Angka Gold (Hanya saat header aktif/gelap)
+            // --- WARNA SAAT AKTIF (DIKLIK) ---
+            bgActive: "#111111",        // Hitam Gelap
+            textActiveLight: "#ffffff", // Putih
+            textActiveGold: "#ffd700",  // Gold Murni
             
-            accentRed: "#c0392b",       // Garis Pinggir Merah
-            border: "#ecf0f1"         
+            accentRed: "#c0392b",       // Garis Pinggir
+            border: "#e0e0e0"         
         };
 
         // --- 2. CSS INJECTION ---
         const styles = `
             /* IMPORT FONT POPPINS */
-            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
             /* --- CONTAINER UTAMA --- */
             #togel-mobile {
-                /* Padding 30px agar lebar kotak optimal */
                 padding: 20px 30px !important;
                 background-color: ${theme.bgMain} !important;
                 height: auto !important; 
@@ -63,25 +62,24 @@
                 gap: 8px !important; 
 
                 border-radius: 8px !important;
-                transition: all 0.3s ease;
+                transition: background 0.2s ease;
             }
 
             /* --- KONTEN HEADER --- */
             
-            /* Nama Pasaran (DEFAULT: MERAH) */
+            /* Nama Pasaran (MERAH) */
             #togel-mobile .accordion-button .pasaran {
                 font-family: 'Poppins', sans-serif !important;
                 font-size: 14px !important; 
                 font-weight: 700 !important;
-                color: ${theme.textDefault} !important; 
+                color: ${theme.textPasaran} !important; 
                 text-transform: uppercase;
                 text-align: left;
                 line-height: 1.2;
-                white-space: normal !important; /* Text boleh turun baris jika panjang */
-                transition: color 0.3s;
+                white-space: normal !important; 
             }
 
-            /* Tanggal (DEFAULT: ABU) */
+            /* Tanggal */
             #togel-mobile .accordion-button .tanggal {
                 font-family: 'Poppins', sans-serif !important;
                 font-size: 12px !important; 
@@ -91,47 +89,49 @@
                 align-items: center;
                 justify-content: center;
                 margin-top: 1px;
-                white-space: nowrap; 
-                transition: color 0.3s;
             }
 
-            /* Angka (DEFAULT: HITAM/GELAP) */
-            #togel-mobile .accordion-button .keluaran {
+            /* --- ANGKA RESULT (FORCE DARK) --- */
+            /* Kita gunakan selector ganda untuk menimpa CSS bawaan */
+            #togel-mobile .accordion-button .keluaran,
+            #togel-mobile .result .keluaran {
                 font-family: 'Oswald', sans-serif !important;
                 font-size: 20px !important;
                 font-weight: 800 !important;
-                color: ${theme.textResultDefault} !important; /* HITAM */
+                color: ${theme.textResult} !important; /* HITAM PEKAT */
                 text-align: right;
                 display: block !important;
-                transition: color 0.3s;
+                text-shadow: none !important; /* Hapus efek shadow orange jika ada */
             }
 
 
-            /* --- HEADER SAAT DI-KLIK (GELAP) --- */
+            /* --- SAAT TOMBOL DIKLIK / AKTIF --- */
+            
+            /* Background Gelap */
             #togel-mobile .accordion-button:not(.collapsed) {
                 background-color: ${theme.bgActive} !important; 
+                border-bottom: 1px solid #333 !important; 
                 border-bottom-left-radius: 0 !important;
                 border-bottom-right-radius: 0 !important;
-                border-bottom: 1px solid #333 !important; 
             }
 
-            /* Nama Pasaran Aktif -> PUTIH */
+            /* Nama Pasaran -> Putih */
             #togel-mobile .accordion-button:not(.collapsed) .pasaran {
                 color: ${theme.textActiveLight} !important; 
             }
 
-            /* Tanggal Aktif -> PUTIH REDUP */
+            /* Tanggal -> Putih Redup */
             #togel-mobile .accordion-button:not(.collapsed) .tanggal {
-                color: #dddddd !important; 
+                color: #cccccc !important; 
             }
 
-            /* Angka Aktif -> GOLD (Agar Mewah di Background Hitam) */
+            /* Angka -> GOLD MENYALA (Hanya saat aktif) */
             #togel-mobile .accordion-button:not(.collapsed) .keluaran {
                 color: ${theme.textActiveGold} !important; 
-                text-shadow: 0 0 8px rgba(255, 193, 7, 0.4);
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.6) !important;
             }
 
-            /* Panah Aktif -> MERAH */
+            /* Panah -> Merah Putar */
             #togel-mobile .accordion-button:not(.collapsed)::after {
                 content: "▼"; 
                 transform: rotate(180deg);
@@ -157,7 +157,7 @@
 
             /* --- HISTORY (ISI DALAM) --- */
             #togel-mobile .accordion-collapse {
-                background-color: #fcfcfc !important;
+                background-color: #ffffff !important;
                 border-bottom-left-radius: 8px !important;
                 border-bottom-right-radius: 8px !important;
             }
@@ -166,10 +166,10 @@
                 padding: 10px 12px !important;
                 border-bottom: 1px dashed ${theme.border} !important;
                 display: grid !important;
-                /* GRID HISTORY SAMA DENGAN HEADER */
                 grid-template-columns: 1fr 74px 60px 15px !important;
                 align-items: center !important;
                 gap: 8px !important;
+                background: transparent !important; /* Reset background */
             }
             
             #togel-mobile .accordion-collapse .result:last-child {
@@ -190,12 +190,12 @@
                 font-weight: 500;
             }
 
-            /* Angka History -> HITAM/GELAP */
+            /* Angka History -> HITAM */
             #togel-mobile .accordion-collapse .result .keluaran {
                 font-family: 'Oswald', sans-serif !important;
                 font-size: 18px !important;
                 font-weight: 700 !important;
-                color: ${theme.textResultDefault} !important; /* Menggunakan Warna Gelap */
+                color: #000000 !important; /* Paksa Hitam */
                 text-align: right;
                 display: block !important;
             }
@@ -210,7 +210,7 @@
             #custom-title-inject {
                 text-align: center;
                 font-weight: 800;
-                color: ${theme.textResultDefault}; /* Judul ikut warna gelap */
+                color: #222222; 
                 padding-bottom: 10px;
                 font-size: 18px;
                 text-transform: uppercase;
@@ -240,7 +240,7 @@
         };
         
         fixArrowState();
-        setTimeout(fixArrowState, 200);
+        setTimeout(fixArrowState, 300); // Delay sedikit lebih lama utk memastikan
 
         // --- 4. INJECT JUDUL ---
         const parent = document.querySelector('#togel-mobile');
