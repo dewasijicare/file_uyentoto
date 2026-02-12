@@ -7,10 +7,10 @@
             bgMain: "#f4f4f4",        
             bgCard: "#ffffff",        
             
-            // --- WARNA DEFAULT (SAAT TERTUTUP) ---
-            textPasaran: "#d32f2f",     // MERAH (Nama Pasaran)
+            // --- WARNA DEFAULT (SUDAH DITUKAR) ---
+            textPasaran: "#000000",     // NAMA PASARAN JADI HITAM
             textDate: "#888888",        // Abu
-            textResult: "#000000",      // HITAM PEKAT (FORCE BLACK)
+            textResult: "#d32f2f",      // RESULT JADI MERAH
             
             // --- WARNA SAAT AKTIF (DIKLIK) ---
             bgActive: "#111111",        // Hitam Gelap
@@ -67,12 +67,12 @@
 
             /* --- KONTEN HEADER --- */
             
-            /* Nama Pasaran (MERAH) */
+            /* Nama Pasaran (HITAM) */
             #togel-mobile .accordion-button .pasaran {
                 font-family: 'Poppins', sans-serif !important;
                 font-size: 14px !important; 
                 font-weight: 700 !important;
-                color: ${theme.textPasaran} !important; 
+                color: ${theme.textPasaran} !important; /* HITAM */
                 text-transform: uppercase;
                 text-align: left;
                 line-height: 1.2;
@@ -91,17 +91,16 @@
                 margin-top: 1px;
             }
 
-            /* --- ANGKA RESULT (FORCE DARK) --- */
-            /* Kita gunakan selector ganda untuk menimpa CSS bawaan */
+            /* --- ANGKA RESULT (MERAH) --- */
             #togel-mobile .accordion-button .keluaran,
             #togel-mobile .result .keluaran {
                 font-family: 'Oswald', sans-serif !important;
                 font-size: 20px !important;
                 font-weight: 800 !important;
-                color: ${theme.textResult} !important; /* HITAM PEKAT */
+                color: ${theme.textResult} !important; /* MERAH */
                 text-align: right;
                 display: block !important;
-                text-shadow: none !important; /* Hapus efek shadow orange jika ada */
+                text-shadow: none !important; 
             }
 
 
@@ -190,12 +189,12 @@
                 font-weight: 500;
             }
 
-            /* Angka History -> HITAM */
+            /* Angka History -> MERAH */
             #togel-mobile .accordion-collapse .result .keluaran {
                 font-family: 'Oswald', sans-serif !important;
                 font-size: 18px !important;
                 font-weight: 700 !important;
-                color: #000000 !important; /* Paksa Hitam */
+                color: ${theme.textResult} !important; /* MERAH */
                 text-align: right;
                 display: block !important;
             }
@@ -240,7 +239,7 @@
         };
         
         fixArrowState();
-        setTimeout(fixArrowState, 300); // Delay sedikit lebih lama utk memastikan
+        setTimeout(fixArrowState, 300);
 
         // --- 4. INJECT JUDUL ---
         const parent = document.querySelector('#togel-mobile');
