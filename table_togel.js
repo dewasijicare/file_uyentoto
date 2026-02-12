@@ -6,8 +6,8 @@
         const theme = {
             bgMain: "#f8f9fa",        
             bgCard: "#ffffff",        
-            textDark: "#000000",      // Hitam pekat agar lebih jelas
-            textDate: "#555555",      // Abu agak gelap agar terbaca
+            textDark: "#000000",      
+            textDate: "#555555",      
             accentRed: "#d32f2f",     
             textGold: "#b08432",      
             border: "#e0e0e0"         
@@ -17,7 +17,6 @@
         const styles = `
             /* --- CONTAINER UTAMA --- */
             #togel-mobile {
-                /* Padding Kiri-Kanan diperbesar (30px) agar tabel tidak terlalu lebar */
                 padding: 15px 30px !important; 
                 background-color: ${theme.bgMain} !important;
                 min-height: 100vh;
@@ -29,26 +28,25 @@
                 background: ${theme.bgCard} !important;
                 border: 1px solid ${theme.border} !important;
                 border-radius: 6px !important;
-                margin-bottom: 6px !important; /* Jarak antar baris diperkecil */
+                margin-bottom: 6px !important;
                 box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
                 overflow: hidden;
             }
 
-            /* --- HEADER TOMBOL (Tampilan Utama) --- */
+            /* --- HEADER TOMBOL --- */
             #togel-mobile .accordion-button {
                 background: ${theme.bgCard} !important;
-                /* Padding SANGAT KECIL agar RAMPING (Atas-Bawah 8px) */
                 padding: 8px 10px !important; 
                 border: none !important;
                 box-shadow: none !important;
                 border-left: 5px solid ${theme.accentRed} !important;
                 
-                /* GRID: Kolom dipadatkan */
+                /* GRID SYSTEM */
                 display: grid !important;
-                /* Nama (Auto) | Tanggal (70px) | Angka (55px) | Panah (15px) */
+                /* Kolom: Nama | Tanggal | Angka | Panah */
                 grid-template-columns: 1fr 75px 55px 15px !important; 
                 align-items: center !important;
-                gap: 4px !important; /* Jarak antar kolom rapat */
+                gap: 4px !important;
             }
 
             /* Saat Aktif */
@@ -59,9 +57,9 @@
 
             /* --- ISI KONTEN HEADER --- */
             
-            /* Nama Pasaran (FONT LEBIH BESAR) */
+            /* Nama Pasaran */
             #togel-mobile .accordion-button .pasaran {
-                font-size: 14px !important; /* Diperbesar dari 13px */
+                font-size: 14px !important;
                 font-weight: 800 !important;
                 color: ${theme.textDark} !important;
                 text-transform: uppercase;
@@ -72,18 +70,21 @@
                 line-height: 1.2;
             }
 
-            /* Tanggal (FONT LEBIH BESAR) */
+            /* Tanggal (FIX POSISI) */
             #togel-mobile .accordion-button .tanggal {
-                font-size: 11px !important; /* Diperbesar dari 10px */
+                font-size: 11px !important;
                 color: ${theme.textDate} !important;
-                text-align: center;
-                display: block !important;
-                position: static !important;
-                transform: none !important;
                 font-weight: 600;
+                
+                /* Teknik Centering Absolut */
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                height: 100%; 
+                margin-top: 2px; /* Turunkan dikit 2px biar center optikal */
             }
 
-            /* Angka (TETAP JELAS) */
+            /* Angka */
             #togel-mobile .accordion-button .keluaran {
                 font-family: 'Oswald', sans-serif !important;
                 font-size: 18px !important;
@@ -93,18 +94,24 @@
                 display: block !important;
             }
 
-            /* Panah */
+            /* --- PANAH (LOGIKA CSS) --- */
             #togel-mobile .accordion-button::after {
                 background-image: none !important;
                 font-size: 10px;
                 color: ${theme.accentRed};
                 font-weight: bold;
                 justify-self: end;
+                transition: transform 0.2s ease;
+                display: block;
             }
+
+            /* Default (Tertutup) = Panah Bawah */
             #togel-mobile .accordion-button.collapsed::after {
                 content: "▼"; 
                 transform: rotate(0deg);
             }
+
+            /* Terbuka = Panah Atas */
             #togel-mobile .accordion-button:not(.collapsed)::after {
                 content: "▼"; 
                 transform: rotate(180deg); 
@@ -116,13 +123,12 @@
                 background-color: #fff !important;
             }
 
-            /* Baris History Item */
             #togel-mobile .accordion-collapse .result {
-                padding: 6px 10px !important; /* Padding History juga RAMPING */
+                padding: 6px 10px !important;
                 border-bottom: 1px dashed ${theme.border} !important;
                 
                 display: grid !important;
-                /* GRID HISTORY HARUS SAMA PERSIS DENGAN HEADER */
+                /* Grid sama persis dengan header */
                 grid-template-columns: 1fr 75px 55px 15px !important;
                 align-items: center !important;
                 gap: 4px !important;
@@ -132,16 +138,21 @@
                 border-bottom: none !important;
             }
 
+            /* Spacer kolom pertama */
             #togel-mobile .accordion-collapse .result::before {
-                content: ""; /* Spacer kolom pertama */
+                content: ""; 
                 display: block;
             }
 
             #togel-mobile .accordion-collapse .result .tanggal {
-                font-size: 11px !important; /* Samakan besarnya */
+                font-size: 11px !important;
                 color: ${theme.textDate} !important;
-                text-align: center;
-                display: block !important;
+                
+                /* Fix Centering History juga */
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                margin-top: 2px;
                 font-weight: 500;
             }
 
@@ -181,6 +192,27 @@
         styleElement.innerHTML = styles;
         document.head.appendChild(styleElement);
 
+        // --- 3. JS LOGIC: FORCE COLLAPSED STATE ---
+        // Ini memperbaiki masalah panah terbalik saat load pertama
+        const fixArrowState = () => {
+            const btns = document.querySelectorAll('#togel-mobile .accordion-button');
+            btns.forEach(btn => {
+                // Paksa tambah class 'collapsed' agar CSS ngebaca ini sebagai tertutup (Panah Bawah)
+                // Bootstrap akan otomatis mencabut class ini saat diklik nanti.
+                if (!btn.classList.contains('collapsed')) {
+                    btn.classList.add('collapsed');
+                }
+            });
+        };
+
+        // Jalankan fix arrow segera setelah DOM ready
+        fixArrowState();
+        
+        // Jalankan lagi sedikit delay utk memastikan (fallback)
+        setTimeout(fixArrowState, 100);
+
+
+        // --- 4. INJECT JUDUL ---
         const parent = document.querySelector('#togel-mobile');
         if(parent && !document.getElementById('custom-title-inject')) {
             const title = document.createElement('div');
