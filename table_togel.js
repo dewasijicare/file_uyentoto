@@ -7,17 +7,17 @@
             bgMain: "#f4f4f4",        
             bgCard: "#ffffff",        
             
-            // Warna Default (Normal)
+            // --- WARNA DEFAULT (SAAT TERTUTUP/NORMAL) ---
             textDefault: "#d32f2f",     // MERAH (Nama Pasaran)
             textDate: "#95a5a6",        // Abu Soft
-            textGoldDefault: "#d35400", // Orange/Gold Gelap
+            textResultDefault: "#111111", // HITAM GELAP (Angka Keluaran Default & History)
             
-            // Warna Saat Aktif (Diklik)
-            bgActive: "#1a1a1a",        // Hitam Gelap
-            textActiveLight: "#ffffff", // Putih
-            textActiveGold: "#ffc107",  // Gold Terang
+            // --- WARNA SAAT AKTIF (DIKLIK/TERBUKA) ---
+            bgActive: "#1a1a1a",        // Background Hitam
+            textActiveLight: "#ffffff", // Teks Putih
+            textActiveGold: "#ffc107",  // Angka Gold (Hanya saat header aktif/gelap)
             
-            accentRed: "#c0392b",       // Garis Pinggir
+            accentRed: "#c0392b",       // Garis Pinggir Merah
             border: "#ecf0f1"         
         };
 
@@ -26,9 +26,9 @@
             /* IMPORT FONT POPPINS */
             @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-            /* --- CONTAINER UTAMA (DIPERLEBAR) --- */
+            /* --- CONTAINER UTAMA --- */
             #togel-mobile {
-                /* Padding dikurangi jadi 30px agar kotak lebih lebar & muat teks panjang */
+                /* Padding 30px agar lebar kotak optimal */
                 padding: 20px 30px !important;
                 background-color: ${theme.bgMain} !important;
                 height: auto !important; 
@@ -50,17 +50,17 @@
             /* --- HEADER TOMBOL --- */
             #togel-mobile .accordion-button {
                 background: ${theme.bgCard} !important;
-                padding: 12px 12px !important; /* Padding dalam sedikit dirapatkan */
+                padding: 12px 12px !important; 
                 border: none !important;
                 box-shadow: none !important;
                 border-left: 5px solid ${theme.accentRed} !important;
                 
-                /* GRID SYSTEM BARU (OPTIMAL) */
+                /* GRID SYSTEM */
                 display: grid !important;
-                /* Nama (Sisa Ruang) | Tanggal (74px) | Angka (60px) | Panah (15px) */
+                /* Nama | Tanggal | Angka | Panah */
                 grid-template-columns: 1fr 74px 60px 15px !important; 
                 align-items: center !important;
-                gap: 8px !important; /* Gap pas */
+                gap: 8px !important; 
 
                 border-radius: 8px !important;
                 transition: all 0.3s ease;
@@ -77,36 +77,33 @@
                 text-transform: uppercase;
                 text-align: left;
                 line-height: 1.2;
-                
-                /* Agar tidak terpotong paksa, kita biarkan text turun jika mentok banget */
-                white-space: normal !important; 
-                /* Atau gunakan nowrap jika ingin tetap 1 baris */
-                /* white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; */
-                
+                white-space: normal !important; /* Text boleh turun baris jika panjang */
                 transition: color 0.3s;
             }
 
-            /* Tanggal */
+            /* Tanggal (DEFAULT: ABU) */
             #togel-mobile .accordion-button .tanggal {
                 font-family: 'Poppins', sans-serif !important;
-                font-size: 12px !important; /* Ukuran Pas */
+                font-size: 12px !important; 
                 color: ${theme.textDate} !important;
                 font-weight: 500;
                 display: flex !important;
                 align-items: center;
                 justify-content: center;
                 margin-top: 1px;
-                white-space: nowrap; /* Tanggal jangan turun baris */
+                white-space: nowrap; 
+                transition: color 0.3s;
             }
 
-            /* Angka */
+            /* Angka (DEFAULT: HITAM/GELAP) */
             #togel-mobile .accordion-button .keluaran {
                 font-family: 'Oswald', sans-serif !important;
                 font-size: 20px !important;
                 font-weight: 800 !important;
-                color: ${theme.textGoldDefault} !important;
+                color: ${theme.textResultDefault} !important; /* HITAM */
                 text-align: right;
                 display: block !important;
+                transition: color 0.3s;
             }
 
 
@@ -128,13 +125,13 @@
                 color: #dddddd !important; 
             }
 
-            /* Angka Aktif -> GOLD */
+            /* Angka Aktif -> GOLD (Agar Mewah di Background Hitam) */
             #togel-mobile .accordion-button:not(.collapsed) .keluaran {
                 color: ${theme.textActiveGold} !important; 
                 text-shadow: 0 0 8px rgba(255, 193, 7, 0.4);
             }
 
-            /* Panah Aktif */
+            /* Panah Aktif -> MERAH */
             #togel-mobile .accordion-button:not(.collapsed)::after {
                 content: "▼"; 
                 transform: rotate(180deg);
@@ -168,9 +165,8 @@
             #togel-mobile .accordion-collapse .result {
                 padding: 10px 12px !important;
                 border-bottom: 1px dashed ${theme.border} !important;
-                
                 display: grid !important;
-                /* GRID SAMA PERSIS HEADER */
+                /* GRID HISTORY SAMA DENGAN HEADER */
                 grid-template-columns: 1fr 74px 60px 15px !important;
                 align-items: center !important;
                 gap: 8px !important;
@@ -194,11 +190,12 @@
                 font-weight: 500;
             }
 
+            /* Angka History -> HITAM/GELAP */
             #togel-mobile .accordion-collapse .result .keluaran {
                 font-family: 'Oswald', sans-serif !important;
                 font-size: 18px !important;
                 font-weight: 700 !important;
-                color: ${theme.textGoldDefault} !important;
+                color: ${theme.textResultDefault} !important; /* Menggunakan Warna Gelap */
                 text-align: right;
                 display: block !important;
             }
@@ -213,7 +210,7 @@
             #custom-title-inject {
                 text-align: center;
                 font-weight: 800;
-                color: ${theme.textDefault}; 
+                color: ${theme.textResultDefault}; /* Judul ikut warna gelap */
                 padding-bottom: 10px;
                 font-size: 18px;
                 text-transform: uppercase;
