@@ -4,7 +4,7 @@
 
         // --- 1. PENGATURAN LINK & GAMBAR ---
         const config = {
-            linkRTP: "/", 
+            linkRTP: "https://rtpuyentoto.online/", 
             imgRTP: "https://cdn.jsdelivr.net/gh/dewasijicare/file_uyentoto@53d447bf4ad0c8dec5b75118f6159edc54bdb2a8/RTP.webp",
             
             linkWA: "/",
@@ -140,3 +140,4 @@
     });
 
 })();
+
