@@ -169,7 +169,7 @@
                 font-family: 'Poppins', sans-serif;
             }
 
-            /* --- CUSTOM PAGINATION --- */
+            /* --- CUSTOM PAGINATION (NATIVE BOOTSTRAP CONTROL) --- */
             #custom-pagination-container {
                 display: flex;
                 justify-content: center;
@@ -214,13 +214,9 @@
             
             .page-link-custom i { font-size: 12px; }
 
-            /* PERBAIKAN PENTING: Sembunyikan titik indikator default tanpa display:none agar klik tetap berjalan */
+            /* Sembunyikan titik asli menggunakan display:none karena kita sudah menggunakan Native Bootstrap */
             #mobile-togel {
-                position: absolute !important;
-                opacity: 0 !important;
-                visibility: hidden !important;
-                pointer-events: none !important;
-                z-index: -999 !important;
+                display: none !important;
             }
         `;
 
@@ -250,77 +246,49 @@
             parent.insertBefore(title, parent.firstChild);
         }
 
-        // --- 5. INJECT PAGINATION SEBAGAI PENGONTROL SLIDE ---
-        const originalIndicators = document.querySelectorAll('#mobile-togel button[data-bs-slide-to]');
-        const carouselEl = document.querySelector('#togel-mobile .carousel');
+        // --- 5. INJECT PAGINATION DENGAN NATIVE BOOTSTRAP TARGET ---
+        const originalIndicatorsWrap = document.getElementById('mobile-togel');
 
-        if(parent && originalIndicators.length > 0 && !document.getElementById('custom-pagination-container')) {
+        if(parent && originalIndicatorsWrap && !document.getElementById('custom-pagination-container')) {
             
-            const paginationContainer = document.createElement('div');
-            paginationContainer.id = 'custom-pagination-container';
+            // Mencari div terluar yang membungkus slider
+            const carouselEl = originalIndicatorsWrap.closest('.carousel');
             
-            // Generate nomor halaman berdasarkan jumlah titik asli
-            let numsHtml = '';
-            originalIndicators.forEach((ind, index) => {
-                numsHtml += `<button type="button" class="page-link-custom pg-num ${index === 0 ? 'active' : ''}" data-slide-index="${index}">${index + 1}</button>`;
-            });
-
-            // Menyusun tombol
-            paginationContainer.innerHTML = `
-                <button type="button" class="page-link-custom" id="pg-prev"><i class="bi bi-chevron-left"></i> Prev</button>
-                ${numsHtml}
-                <button type="button" class="page-link-custom" id="pg-next">Next <i class="bi bi-chevron-right"></i></button>
-            `;
-            
-            parent.appendChild(paginationContainer);
-
-            // Fungsi Update UI Nomor Merah
-            const updateActivePagination = (activeIndex) => {
-                document.querySelectorAll('.pg-num').forEach(btn => btn.classList.remove('active'));
-                const activeBtn = document.querySelector(`.pg-num[data-slide-index="${activeIndex}"]`);
-                if(activeBtn) activeBtn.classList.add('active');
-            };
-
-            // Event Klik Angka (1, 2, 3)
-            document.querySelectorAll('.pg-num').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const slideIdx = this.getAttribute('data-slide-index');
-                    const targetInd = document.querySelector('#mobile-togel button[data-bs-slide-to="' + slideIdx + '"]');
-                    if(targetInd) targetInd.click(); 
-                });
-            });
-
-            // Event Klik PREV (Mundur)
-            document.getElementById('pg-prev').addEventListener('click', function(e) {
-                e.preventDefault();
-                const activeBtn = document.querySelector('.pg-num.active');
-                if(activeBtn) {
-                    let currentIdx = parseInt(activeBtn.getAttribute('data-slide-index'));
-                    let prevIdx = currentIdx > 0 ? currentIdx - 1 : originalIndicators.length - 1; // Jika di awal, lompat ke paling akhir
-                    
-                    const targetInd = document.querySelector('#mobile-togel button[data-bs-slide-to="' + prevIdx + '"]');
-                    if(targetInd) targetInd.click();
-                }
-            });
-
-            // Event Klik NEXT (Maju)
-            document.getElementById('pg-next').addEventListener('click', function(e) {
-                e.preventDefault();
-                const activeBtn = document.querySelector('.pg-num.active');
-                if(activeBtn) {
-                    let currentIdx = parseInt(activeBtn.getAttribute('data-slide-index'));
-                    let nextIdx = currentIdx < (originalIndicators.length - 1) ? currentIdx + 1 : 0; // Jika di akhir, putar balik ke 1
-                    
-                    const targetInd = document.querySelector('#mobile-togel button[data-bs-slide-to="' + nextIdx + '"]');
-                    if(targetInd) targetInd.click();
-                }
-            });
-
-            // Memastikan Angka Merah Berubah Meskipun Di Usap / Auto Slide
             if (carouselEl) {
+                // Pastikan div slider ini punya ID agar bisa ditargetkan oleh pagination baru kita
+                if (!carouselEl.id) {
+                    carouselEl.id = 'carousel-togel-native';
+                }
+                const targetId = carouselEl.id;
+                
+                // Kumpulkan jumlah halaman dari indikator bawaan
+                const originalIndicators = originalIndicatorsWrap.querySelectorAll('button[data-bs-slide-to]');
+                
+                const paginationContainer = document.createElement('div');
+                paginationContainer.id = 'custom-pagination-container';
+                
+                let numsHtml = '';
+                originalIndicators.forEach((ind, index) => {
+                    const isActive = index === 0 ? 'active' : '';
+                    // Menambahkan atribut data-bs-target & data-bs-slide-to persis seperti bawaan Bootstrap
+                    numsHtml += `<button type="button" class="page-link-custom pg-num ${isActive}" data-bs-target="#${targetId}" data-bs-slide-to="${index}">${index + 1}</button>`;
+                });
+
+                // Susun HTML dengan atribut Prev/Next Bootstrap
+                paginationContainer.innerHTML = `
+                    <button type="button" class="page-link-custom" data-bs-target="#${targetId}" data-bs-slide="prev"><i class="bi bi-chevron-left"></i> Prev</button>
+                    ${numsHtml}
+                    <button type="button" class="page-link-custom" data-bs-target="#${targetId}" data-bs-slide="next">Next <i class="bi bi-chevron-right"></i></button>
+                `;
+                
+                parent.appendChild(paginationContainer);
+
+                // --- 6. UPDATE WARNA MERAH (ACTIVE) KETIKA SLIDE BERGESER ---
+                // Fungsi ini bertugas memindahkan kotak merah (active) ketika slide bergeser otomatis/manual
                 carouselEl.addEventListener('slid.bs.carousel', function (e) {
-                    updateActivePagination(e.to); 
+                    document.querySelectorAll('.pg-num').forEach(btn => btn.classList.remove('active'));
+                    const activeBtn = document.querySelector(`.pg-num[data-bs-slide-to="${e.to}"]`);
+                    if(activeBtn) activeBtn.classList.add('active');
                 });
             }
         }
