@@ -7,7 +7,7 @@
             bgMain: "#f4f4f4",        
             bgCard: "#ffffff",        
             
-            // --- WARNA DEFAULT (SUDAH DITUKAR) ---
+            // --- WARNA DEFAULT ---
             textPasaran: "#000000",     // NAMA PASARAN JADI HITAM
             textDate: "#888888",        // Abu
             textResult: "#d32f2f",      // RESULT JADI MERAH
@@ -32,8 +32,8 @@
                 background-color: ${theme.bgMain} !important;
                 height: auto !important; 
                 min-height: auto !important;
-                padding-bottom: 80px !important; 
-                font-family: 'Poppins', sans-serif !important; 
+                padding-bottom: 50px !important; /* Disesuaikan agar muat tombol baru */
+                font-family: 'Poppins', sans-serif !important;
             }
 
             /* --- BARIS TABEL --- */
@@ -53,11 +53,11 @@
                 border: none !important;
                 box-shadow: none !important;
                 border-left: 5px solid ${theme.accentRed} !important;
-                
+
                 /* GRID SYSTEM */
                 display: grid !important;
                 /* Nama | Tanggal | Angka | Panah */
-                grid-template-columns: 1fr 74px 60px 15px !important; 
+                grid-template-columns: 1fr 74px 60px 15px !important;
                 align-items: center !important;
                 gap: 8px !important; 
 
@@ -103,12 +103,11 @@
                 text-shadow: none !important; 
             }
 
-
             /* --- SAAT TOMBOL DIKLIK / AKTIF --- */
             
             /* Background Gelap */
             #togel-mobile .accordion-button:not(.collapsed) {
-                background-color: ${theme.bgActive} !important; 
+                background-color: ${theme.bgActive} !important;
                 border-bottom: 1px solid #333 !important; 
                 border-bottom-left-radius: 0 !important;
                 border-bottom-right-radius: 0 !important;
@@ -116,27 +115,26 @@
 
             /* Nama Pasaran -> Putih */
             #togel-mobile .accordion-button:not(.collapsed) .pasaran {
-                color: ${theme.textActiveLight} !important; 
+                color: ${theme.textActiveLight} !important;
             }
 
             /* Tanggal -> Putih Redup */
             #togel-mobile .accordion-button:not(.collapsed) .tanggal {
-                color: #cccccc !important; 
+                color: #cccccc !important;
             }
 
             /* Angka -> GOLD MENYALA (Hanya saat aktif) */
             #togel-mobile .accordion-button:not(.collapsed) .keluaran {
-                color: ${theme.textActiveGold} !important; 
+                color: ${theme.textActiveGold} !important;
                 text-shadow: 0 0 10px rgba(255, 215, 0, 0.6) !important;
             }
 
             /* Panah -> Merah Putar */
             #togel-mobile .accordion-button:not(.collapsed)::after {
-                content: "▼"; 
+                content: "▼";
                 transform: rotate(180deg);
                 color: ${theme.accentRed}; 
             }
-
 
             /* --- PANAH DEFAULT --- */
             #togel-mobile .accordion-button::after {
@@ -149,10 +147,9 @@
                 display: block;
             }
             #togel-mobile .accordion-button.collapsed::after {
-                content: "▼"; 
+                content: "▼";
                 transform: rotate(0deg);
             }
-
 
             /* --- HISTORY (ISI DALAM) --- */
             #togel-mobile .accordion-collapse {
@@ -176,7 +173,8 @@
             }
 
             #togel-mobile .accordion-collapse .result::before {
-                content: ""; display: block;
+                content: "";
+                display: block;
             }
 
             #togel-mobile .accordion-collapse .result .tanggal {
@@ -222,6 +220,33 @@
                 letter-spacing: 1px;
                 font-family: 'Poppins', sans-serif;
             }
+
+            /* --- CUSTOM TOMBOL LINK --- */
+            #custom-link-togel {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                background: linear-gradient(135deg, ${theme.accentRed} 0%, #8b0000 100%);
+                color: #ffffff !important;
+                font-family: 'Poppins', sans-serif;
+                font-weight: 700;
+                font-size: 15px;
+                text-transform: uppercase;
+                text-decoration: none;
+                padding: 12px 20px;
+                border-radius: 8px;
+                margin-top: 20px;
+                box-shadow: 0 4px 10px rgba(192, 57, 43, 0.4);
+                transition: transform 0.2s, filter 0.2s;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            #custom-link-togel:hover {
+                transform: translateY(-2px);
+                filter: brightness(1.2);
+            }
         `;
 
         const styleElement = document.createElement('style');
@@ -248,6 +273,20 @@
             title.id = 'custom-title-inject';
             title.innerText = 'Hasil Keluaran Togel';
             parent.insertBefore(title, parent.firstChild);
+        }
+
+        // --- 5. INJECT TOMBOL LINK PINDAH HALAMAN ---
+        if(parent && !document.getElementById('custom-link-togel')) {
+            const btnLink = document.createElement('a');
+            btnLink.id = 'custom-link-togel';
+            
+            // --- SETTING LINK & TEKS DI SINI ---
+            btnLink.href = '/hasil'; // Ganti '/hasil' dengan URL halaman tujuan Anda
+            btnLink.innerHTML = 'Lihat Semua Pasaran <i class="bi bi-arrow-right-circle-fill"></i>';
+            // -----------------------------------
+            
+            // Menambahkan tombol ke bagian paling bawah tabel
+            parent.appendChild(btnLink);
         }
 
     });
