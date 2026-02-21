@@ -17,7 +17,7 @@
             textActiveLight: "#ffffff", // Putih
             textActiveGold: "#ffd700",  // Gold Murni
             
-            accentRed: "#c0392b",       // Garis Pinggir & Warna Aktif Pagination
+            accentRed: "#c0392b",       // Garis Pinggir & Warna Pagination Aktif
             border: "#e0e0e0"         
         };
 
@@ -32,7 +32,7 @@
                 background-color: ${theme.bgMain} !important;
                 height: auto !important; 
                 min-height: auto !important;
-                padding-bottom: 40px !important; 
+                padding-bottom: 30px !important; 
                 font-family: 'Poppins', sans-serif !important;
             }
 
@@ -209,7 +209,7 @@
                 font-family: 'Poppins', sans-serif;
             }
 
-            /* --- CUSTOM PAGINATION / LINK HALAMAN --- */
+            /* --- CSS CUSTOM PAGINATION (SLIDE KONTROL) --- */
             #custom-pagination-container {
                 display: flex;
                 justify-content: center;
@@ -235,6 +235,7 @@
                 border: 1px solid #dcdcdc;
                 box-shadow: 0 2px 4px rgba(0,0,0,0.05);
                 transition: all 0.2s ease;
+                cursor: pointer;
             }
 
             .page-link-custom:hover {
@@ -252,6 +253,11 @@
             
             .page-link-custom i {
                 font-size: 12px;
+            }
+
+            /* Sembunyikan titik default carousel bawaan web */
+            #mobile-togel {
+                display: none !important;
             }
         `;
 
@@ -281,23 +287,80 @@
             parent.insertBefore(title, parent.firstChild);
         }
 
-        // --- 5. INJECT PAGINATION (LINK PINDAH HALAMAN) ---
-        if(parent && !document.getElementById('custom-pagination-container')) {
+        // --- 5. INJECT PAGINATION SEBAGAI PENGONTROL SLIDE ---
+        const originalIndicators = document.querySelectorAll('#mobile-togel button[data-bs-slide-to]');
+        const carouselEl = document.querySelector('#togel-mobile .carousel');
+
+        // Pastikan tabel ada, titik indikator asli ditemukan, dan belum membuat pagination custom
+        if(parent && originalIndicators.length > 0 && !document.getElementById('custom-pagination-container')) {
+            
             const paginationContainer = document.createElement('div');
             paginationContainer.id = 'custom-pagination-container';
             
-            // --- GANTI URL DI BAGIAN href="..." SESUAI DENGAN LINK HALAMAN ANDA ---
+            // Generate angka otomatis berdasarkan jumlah slide yang disediakan sistem
+            let numsHtml = '';
+            originalIndicators.forEach((ind, index) => {
+                numsHtml += `<button class="page-link-custom pg-num ${index === 0 ? 'active' : ''}" data-slide="${index}">${index + 1}</button>`;
+            });
+
+            // Susun HTML Navigasinya
             paginationContainer.innerHTML = `
-                <a href="/halaman-sebelumnya" class="page-link-custom"><i class="bi bi-chevron-left"></i> Prev</a>
-                <a href="/halaman-1" class="page-link-custom active">1</a>
-                <a href="/halaman-2" class="page-link-custom">2</a>
-                <a href="/halaman-3" class="page-link-custom">3</a>
-                <a href="/halaman-selanjutnya" class="page-link-custom">Next <i class="bi bi-chevron-right"></i></a>
+                <button class="page-link-custom" id="pg-prev"><i class="bi bi-chevron-left"></i> Prev</button>
+                ${numsHtml}
+                <button class="page-link-custom" id="pg-next">Next <i class="bi bi-chevron-right"></i></button>
             `;
-            // ----------------------------------------------------------------------
             
-            // Menambahkan pagination ke bagian paling bawah tabel
+            // Masukkan ke bagian bawah kontainer tabel
             parent.appendChild(paginationContainer);
+
+            // --- FUNGSI KLIK & GANTI AKTIF ---
+            const updateActivePagination = (activeIndex) => {
+                document.querySelectorAll('.pg-num').forEach(btn => btn.classList.remove('active'));
+                const activeBtn = document.querySelector(`.pg-num[data-slide="${activeIndex}"]`);
+                if(activeBtn) activeBtn.classList.add('active');
+            };
+
+            // Saat Angka diklik (1, 2, 3)
+            document.querySelectorAll('.pg-num').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const slideIdx = this.getAttribute('data-slide');
+                    // Simulasikan klik pada titik default asli (yang sudah kita sembunyikan)
+                    const targetInd = document.querySelector(`#mobile-togel button[data-bs-slide-to="${slideIdx}"]`);
+                    if(targetInd) targetInd.click(); 
+                });
+            });
+
+            // Saat Prev diklik
+            document.getElementById('pg-prev').addEventListener('click', function() {
+                const activeNumBtn = document.querySelector('.pg-num.active');
+                if(activeNumBtn) {
+                    let currentIdx = parseInt(activeNumBtn.getAttribute('data-slide'));
+                    if(currentIdx > 0) { // Jika bukan halaman pertama, geser mundur
+                        currentIdx--;
+                        document.querySelector(`#mobile-togel button[data-bs-slide-to="${currentIdx}"]`).click();
+                    }
+                }
+            });
+
+            // Saat Next diklik
+            document.getElementById('pg-next').addEventListener('click', function() {
+                const activeNumBtn = document.querySelector('.pg-num.active');
+                if(activeNumBtn) {
+                    let currentIdx = parseInt(activeNumBtn.getAttribute('data-slide'));
+                    if(currentIdx < originalIndicators.length - 1) { // Jika bukan halaman terakhir, geser maju
+                        currentIdx++;
+                        document.querySelector(`#mobile-togel button[data-bs-slide-to="${currentIdx}"]`).click();
+                    }
+                }
+            });
+
+            // Ini agar angka merahnya ikut berpindah kalau player menggesernya menggunakan usapan/swipe layar
+            if (carouselEl) {
+                carouselEl.addEventListener('slid.bs.carousel', function (e) {
+                    // Bootstrap memberikan property 'e.to' untuk mengetahui index slide tujuan
+                    updateActivePagination(e.to); 
+                });
+            }
         }
 
     });
