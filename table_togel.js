@@ -6,37 +6,29 @@
         const theme = {
             bgMain: "#f4f4f4",        
             bgCard: "#ffffff",        
-            
-            // --- WARNA DEFAULT ---
             textPasaran: "#000000",     // NAMA PASARAN JADI HITAM
             textDate: "#888888",        // Abu
             textResult: "#d32f2f",      // RESULT JADI MERAH
-            
-            // --- WARNA SAAT AKTIF (DIKLIK) ---
             bgActive: "#111111",        // Hitam Gelap
             textActiveLight: "#ffffff", // Putih
             textActiveGold: "#ffd700",  // Gold Murni
-            
-            accentRed: "#c0392b",       // Garis Pinggir & Warna Pagination Aktif
+            accentRed: "#c0392b",       // Garis Pinggir & Warna Aktif Pagination
             border: "#e0e0e0"         
         };
 
         // --- 2. CSS INJECTION ---
         const styles = `
-            /* IMPORT FONT POPPINS */
             @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-            /* --- CONTAINER UTAMA --- */
             #togel-mobile {
                 padding: 20px 30px !important;
                 background-color: ${theme.bgMain} !important;
                 height: auto !important; 
                 min-height: auto !important;
-                padding-bottom: 30px !important; 
+                padding-bottom: 40px !important; 
                 font-family: 'Poppins', sans-serif !important;
             }
 
-            /* --- BARIS TABEL --- */
             #togel-mobile .accordion-item {
                 background: ${theme.bgCard} !important;
                 border: none !important; 
@@ -46,25 +38,20 @@
                 overflow: hidden;
             }
 
-            /* --- HEADER TOMBOL --- */
             #togel-mobile .accordion-button {
                 background: ${theme.bgCard} !important;
                 padding: 12px 12px !important; 
                 border: none !important;
                 box-shadow: none !important;
                 border-left: 5px solid ${theme.accentRed} !important;
-
-                /* GRID SYSTEM */
                 display: grid !important;
                 grid-template-columns: 1fr 74px 60px 15px !important;
                 align-items: center !important;
                 gap: 8px !important; 
-
                 border-radius: 8px !important;
                 transition: background 0.2s ease;
             }
 
-            /* --- KONTEN HEADER --- */
             #togel-mobile .accordion-button .pasaran {
                 font-family: 'Poppins', sans-serif !important;
                 font-size: 14px !important; 
@@ -98,34 +85,23 @@
                 text-shadow: none !important; 
             }
 
-            /* --- SAAT TOMBOL DIKLIK / AKTIF --- */
             #togel-mobile .accordion-button:not(.collapsed) {
                 background-color: ${theme.bgActive} !important;
                 border-bottom: 1px solid #333 !important; 
                 border-bottom-left-radius: 0 !important;
                 border-bottom-right-radius: 0 !important;
             }
-
-            #togel-mobile .accordion-button:not(.collapsed) .pasaran {
-                color: ${theme.textActiveLight} !important;
-            }
-
-            #togel-mobile .accordion-button:not(.collapsed) .tanggal {
-                color: #cccccc !important;
-            }
-
+            #togel-mobile .accordion-button:not(.collapsed) .pasaran { color: ${theme.textActiveLight} !important; }
+            #togel-mobile .accordion-button:not(.collapsed) .tanggal { color: #cccccc !important; }
             #togel-mobile .accordion-button:not(.collapsed) .keluaran {
                 color: ${theme.textActiveGold} !important;
                 text-shadow: 0 0 10px rgba(255, 215, 0, 0.6) !important;
             }
-
             #togel-mobile .accordion-button:not(.collapsed)::after {
                 content: "▼";
                 transform: rotate(180deg);
                 color: ${theme.accentRed}; 
             }
-
-            /* --- PANAH DEFAULT --- */
             #togel-mobile .accordion-button::after {
                 background-image: none !important;
                 font-size: 10px;
@@ -140,13 +116,11 @@
                 transform: rotate(0deg);
             }
 
-            /* --- HISTORY (ISI DALAM) --- */
             #togel-mobile .accordion-collapse {
                 background-color: #ffffff !important;
                 border-bottom-left-radius: 8px !important;
                 border-bottom-right-radius: 8px !important;
             }
-
             #togel-mobile .accordion-collapse .result {
                 padding: 10px 12px !important;
                 border-bottom: 1px dashed ${theme.border} !important;
@@ -156,16 +130,8 @@
                 gap: 8px !important;
                 background: transparent !important; 
             }
-            
-            #togel-mobile .accordion-collapse .result:last-child {
-                border-bottom: none !important;
-            }
-
-            #togel-mobile .accordion-collapse .result::before {
-                content: "";
-                display: block;
-            }
-
+            #togel-mobile .accordion-collapse .result:last-child { border-bottom: none !important; }
+            #togel-mobile .accordion-collapse .result::before { content: ""; display: block; }
             #togel-mobile .accordion-collapse .result .tanggal {
                 font-family: 'Poppins', sans-serif !important;
                 font-size: 12px !important; 
@@ -175,7 +141,6 @@
                 justify-content: center;
                 font-weight: 500;
             }
-
             #togel-mobile .accordion-collapse .result .keluaran {
                 font-family: 'Oswald', sans-serif !important;
                 font-size: 18px !important;
@@ -184,14 +149,9 @@
                 text-align: right;
                 display: block !important;
             }
-
-            #togel-mobile .accordion-collapse .result .pasaran {
-                display: none !important;
-            }
-            
+            #togel-mobile .accordion-collapse .result .pasaran { display: none !important; }
             .togel-title { display: none !important; }
             
-            /* Custom Title */
             #custom-title-inject {
                 text-align: center;
                 font-weight: 800;
@@ -209,12 +169,12 @@
                 font-family: 'Poppins', sans-serif;
             }
 
-            /* --- CSS CUSTOM PAGINATION (SLIDE KONTROL) --- */
+            /* --- CUSTOM PAGINATION --- */
             #custom-pagination-container {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                gap: 8px;
+                gap: 6px;
                 margin-top: 25px;
                 font-family: 'Poppins', sans-serif;
             }
@@ -223,8 +183,8 @@
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
-                min-width: 35px;
-                height: 35px;
+                min-width: 38px;
+                height: 38px;
                 padding: 0 10px;
                 border-radius: 5px;
                 background: #ffffff;
@@ -236,6 +196,7 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.05);
                 transition: all 0.2s ease;
                 cursor: pointer;
+                outline: none;
             }
 
             .page-link-custom:hover {
@@ -251,13 +212,15 @@
                 box-shadow: 0 2px 8px rgba(192, 57, 43, 0.4);
             }
             
-            .page-link-custom i {
-                font-size: 12px;
-            }
+            .page-link-custom i { font-size: 12px; }
 
-            /* Sembunyikan titik default carousel bawaan web */
+            /* PERBAIKAN PENTING: Sembunyikan titik indikator default tanpa display:none agar klik tetap berjalan */
             #mobile-togel {
-                display: none !important;
+                position: absolute !important;
+                opacity: 0 !important;
+                visibility: hidden !important;
+                pointer-events: none !important;
+                z-index: -999 !important;
             }
         `;
 
@@ -265,7 +228,7 @@
         styleElement.innerHTML = styles;
         document.head.appendChild(styleElement);
 
-        // --- 3. JS FIX PANAH ---
+        // --- 3. JS FIX PANAH BAWAAN ---
         const fixArrowState = () => {
             const btns = document.querySelectorAll('#togel-mobile .accordion-button');
             btns.forEach(btn => {
@@ -291,73 +254,72 @@
         const originalIndicators = document.querySelectorAll('#mobile-togel button[data-bs-slide-to]');
         const carouselEl = document.querySelector('#togel-mobile .carousel');
 
-        // Pastikan tabel ada, titik indikator asli ditemukan, dan belum membuat pagination custom
         if(parent && originalIndicators.length > 0 && !document.getElementById('custom-pagination-container')) {
             
             const paginationContainer = document.createElement('div');
             paginationContainer.id = 'custom-pagination-container';
             
-            // Generate angka otomatis berdasarkan jumlah slide yang disediakan sistem
+            // Generate nomor halaman berdasarkan jumlah titik asli
             let numsHtml = '';
             originalIndicators.forEach((ind, index) => {
-                numsHtml += `<button class="page-link-custom pg-num ${index === 0 ? 'active' : ''}" data-slide="${index}">${index + 1}</button>`;
+                numsHtml += `<button type="button" class="page-link-custom pg-num ${index === 0 ? 'active' : ''}" data-slide-index="${index}">${index + 1}</button>`;
             });
 
-            // Susun HTML Navigasinya
+            // Menyusun tombol
             paginationContainer.innerHTML = `
-                <button class="page-link-custom" id="pg-prev"><i class="bi bi-chevron-left"></i> Prev</button>
+                <button type="button" class="page-link-custom" id="pg-prev"><i class="bi bi-chevron-left"></i> Prev</button>
                 ${numsHtml}
-                <button class="page-link-custom" id="pg-next">Next <i class="bi bi-chevron-right"></i></button>
+                <button type="button" class="page-link-custom" id="pg-next">Next <i class="bi bi-chevron-right"></i></button>
             `;
             
-            // Masukkan ke bagian bawah kontainer tabel
             parent.appendChild(paginationContainer);
 
-            // --- FUNGSI KLIK & GANTI AKTIF ---
+            // Fungsi Update UI Nomor Merah
             const updateActivePagination = (activeIndex) => {
                 document.querySelectorAll('.pg-num').forEach(btn => btn.classList.remove('active'));
-                const activeBtn = document.querySelector(`.pg-num[data-slide="${activeIndex}"]`);
+                const activeBtn = document.querySelector(`.pg-num[data-slide-index="${activeIndex}"]`);
                 if(activeBtn) activeBtn.classList.add('active');
             };
 
-            // Saat Angka diklik (1, 2, 3)
+            // Event Klik Angka (1, 2, 3)
             document.querySelectorAll('.pg-num').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const slideIdx = this.getAttribute('data-slide');
-                    // Simulasikan klik pada titik default asli (yang sudah kita sembunyikan)
-                    const targetInd = document.querySelector(`#mobile-togel button[data-bs-slide-to="${slideIdx}"]`);
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const slideIdx = this.getAttribute('data-slide-index');
+                    const targetInd = document.querySelector('#mobile-togel button[data-bs-slide-to="' + slideIdx + '"]');
                     if(targetInd) targetInd.click(); 
                 });
             });
 
-            // Saat Prev diklik
-            document.getElementById('pg-prev').addEventListener('click', function() {
-                const activeNumBtn = document.querySelector('.pg-num.active');
-                if(activeNumBtn) {
-                    let currentIdx = parseInt(activeNumBtn.getAttribute('data-slide'));
-                    if(currentIdx > 0) { // Jika bukan halaman pertama, geser mundur
-                        currentIdx--;
-                        document.querySelector(`#mobile-togel button[data-bs-slide-to="${currentIdx}"]`).click();
-                    }
+            // Event Klik PREV (Mundur)
+            document.getElementById('pg-prev').addEventListener('click', function(e) {
+                e.preventDefault();
+                const activeBtn = document.querySelector('.pg-num.active');
+                if(activeBtn) {
+                    let currentIdx = parseInt(activeBtn.getAttribute('data-slide-index'));
+                    let prevIdx = currentIdx > 0 ? currentIdx - 1 : originalIndicators.length - 1; // Jika di awal, lompat ke paling akhir
+                    
+                    const targetInd = document.querySelector('#mobile-togel button[data-bs-slide-to="' + prevIdx + '"]');
+                    if(targetInd) targetInd.click();
                 }
             });
 
-            // Saat Next diklik
-            document.getElementById('pg-next').addEventListener('click', function() {
-                const activeNumBtn = document.querySelector('.pg-num.active');
-                if(activeNumBtn) {
-                    let currentIdx = parseInt(activeNumBtn.getAttribute('data-slide'));
-                    if(currentIdx < originalIndicators.length - 1) { // Jika bukan halaman terakhir, geser maju
-                        currentIdx++;
-                        document.querySelector(`#mobile-togel button[data-bs-slide-to="${currentIdx}"]`).click();
-                    }
+            // Event Klik NEXT (Maju)
+            document.getElementById('pg-next').addEventListener('click', function(e) {
+                e.preventDefault();
+                const activeBtn = document.querySelector('.pg-num.active');
+                if(activeBtn) {
+                    let currentIdx = parseInt(activeBtn.getAttribute('data-slide-index'));
+                    let nextIdx = currentIdx < (originalIndicators.length - 1) ? currentIdx + 1 : 0; // Jika di akhir, putar balik ke 1
+                    
+                    const targetInd = document.querySelector('#mobile-togel button[data-bs-slide-to="' + nextIdx + '"]');
+                    if(targetInd) targetInd.click();
                 }
             });
 
-            // Ini agar angka merahnya ikut berpindah kalau player menggesernya menggunakan usapan/swipe layar
+            // Memastikan Angka Merah Berubah Meskipun Di Usap / Auto Slide
             if (carouselEl) {
                 carouselEl.addEventListener('slid.bs.carousel', function (e) {
-                    // Bootstrap memberikan property 'e.to' untuk mengetahui index slide tujuan
                     updateActivePagination(e.to); 
                 });
             }
