@@ -17,7 +17,7 @@
             textActiveLight: "#ffffff", // Putih
             textActiveGold: "#ffd700",  // Gold Murni
             
-            accentRed: "#c0392b",       // Garis Pinggir
+            accentRed: "#c0392b",       // Garis Pinggir & Warna Aktif Pagination
             border: "#e0e0e0"         
         };
 
@@ -32,7 +32,7 @@
                 background-color: ${theme.bgMain} !important;
                 height: auto !important; 
                 min-height: auto !important;
-                padding-bottom: 50px !important; /* Disesuaikan agar muat tombol baru */
+                padding-bottom: 40px !important; 
                 font-family: 'Poppins', sans-serif !important;
             }
 
@@ -56,7 +56,6 @@
 
                 /* GRID SYSTEM */
                 display: grid !important;
-                /* Nama | Tanggal | Angka | Panah */
                 grid-template-columns: 1fr 74px 60px 15px !important;
                 align-items: center !important;
                 gap: 8px !important; 
@@ -66,20 +65,17 @@
             }
 
             /* --- KONTEN HEADER --- */
-            
-            /* Nama Pasaran (HITAM) */
             #togel-mobile .accordion-button .pasaran {
                 font-family: 'Poppins', sans-serif !important;
                 font-size: 14px !important; 
                 font-weight: 700 !important;
-                color: ${theme.textPasaran} !important; /* HITAM */
+                color: ${theme.textPasaran} !important; 
                 text-transform: uppercase;
                 text-align: left;
                 line-height: 1.2;
                 white-space: normal !important; 
             }
 
-            /* Tanggal */
             #togel-mobile .accordion-button .tanggal {
                 font-family: 'Poppins', sans-serif !important;
                 font-size: 12px !important; 
@@ -91,21 +87,18 @@
                 margin-top: 1px;
             }
 
-            /* --- ANGKA RESULT (MERAH) --- */
             #togel-mobile .accordion-button .keluaran,
             #togel-mobile .result .keluaran {
                 font-family: 'Oswald', sans-serif !important;
                 font-size: 20px !important;
                 font-weight: 800 !important;
-                color: ${theme.textResult} !important; /* MERAH */
+                color: ${theme.textResult} !important; 
                 text-align: right;
                 display: block !important;
                 text-shadow: none !important; 
             }
 
             /* --- SAAT TOMBOL DIKLIK / AKTIF --- */
-            
-            /* Background Gelap */
             #togel-mobile .accordion-button:not(.collapsed) {
                 background-color: ${theme.bgActive} !important;
                 border-bottom: 1px solid #333 !important; 
@@ -113,23 +106,19 @@
                 border-bottom-right-radius: 0 !important;
             }
 
-            /* Nama Pasaran -> Putih */
             #togel-mobile .accordion-button:not(.collapsed) .pasaran {
                 color: ${theme.textActiveLight} !important;
             }
 
-            /* Tanggal -> Putih Redup */
             #togel-mobile .accordion-button:not(.collapsed) .tanggal {
                 color: #cccccc !important;
             }
 
-            /* Angka -> GOLD MENYALA (Hanya saat aktif) */
             #togel-mobile .accordion-button:not(.collapsed) .keluaran {
                 color: ${theme.textActiveGold} !important;
                 text-shadow: 0 0 10px rgba(255, 215, 0, 0.6) !important;
             }
 
-            /* Panah -> Merah Putar */
             #togel-mobile .accordion-button:not(.collapsed)::after {
                 content: "▼";
                 transform: rotate(180deg);
@@ -165,7 +154,7 @@
                 grid-template-columns: 1fr 74px 60px 15px !important;
                 align-items: center !important;
                 gap: 8px !important;
-                background: transparent !important; /* Reset background */
+                background: transparent !important; 
             }
             
             #togel-mobile .accordion-collapse .result:last-child {
@@ -187,12 +176,11 @@
                 font-weight: 500;
             }
 
-            /* Angka History -> MERAH */
             #togel-mobile .accordion-collapse .result .keluaran {
                 font-family: 'Oswald', sans-serif !important;
                 font-size: 18px !important;
                 font-weight: 700 !important;
-                color: ${theme.textResult} !important; /* MERAH */
+                color: ${theme.textResult} !important; 
                 text-align: right;
                 display: block !important;
             }
@@ -221,31 +209,49 @@
                 font-family: 'Poppins', sans-serif;
             }
 
-            /* --- CUSTOM TOMBOL LINK --- */
-            #custom-link-togel {
+            /* --- CUSTOM PAGINATION / LINK HALAMAN --- */
+            #custom-pagination-container {
                 display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
+                margin-top: 25px;
+                font-family: 'Poppins', sans-serif;
+            }
+
+            .page-link-custom {
+                display: inline-flex;
                 align-items: center;
                 justify-content: center;
-                gap: 8px;
-                background: linear-gradient(135deg, ${theme.accentRed} 0%, #8b0000 100%);
-                color: #ffffff !important;
-                font-family: 'Poppins', sans-serif;
-                font-weight: 700;
-                font-size: 15px;
-                text-transform: uppercase;
+                min-width: 35px;
+                height: 35px;
+                padding: 0 10px;
+                border-radius: 5px;
+                background: #ffffff;
+                color: #333333 !important;
                 text-decoration: none;
-                padding: 12px 20px;
-                border-radius: 8px;
-                margin-top: 20px;
-                box-shadow: 0 4px 10px rgba(192, 57, 43, 0.4);
-                transition: transform 0.2s, filter 0.2s;
-                width: 100%;
-                box-sizing: border-box;
+                font-weight: 600;
+                font-size: 14px;
+                border: 1px solid #dcdcdc;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                transition: all 0.2s ease;
+            }
+
+            .page-link-custom:hover {
+                background: #f0f0f0;
+                transform: translateY(-2px);
+                border-color: #bbbbbb;
+            }
+
+            .page-link-custom.active {
+                background: ${theme.accentRed};
+                color: #ffffff !important;
+                border-color: ${theme.accentRed};
+                box-shadow: 0 2px 8px rgba(192, 57, 43, 0.4);
             }
             
-            #custom-link-togel:hover {
-                transform: translateY(-2px);
-                filter: brightness(1.2);
+            .page-link-custom i {
+                font-size: 12px;
             }
         `;
 
@@ -275,18 +281,23 @@
             parent.insertBefore(title, parent.firstChild);
         }
 
-        // --- 5. INJECT TOMBOL LINK PINDAH HALAMAN ---
-        if(parent && !document.getElementById('custom-link-togel')) {
-            const btnLink = document.createElement('a');
-            btnLink.id = 'custom-link-togel';
+        // --- 5. INJECT PAGINATION (LINK PINDAH HALAMAN) ---
+        if(parent && !document.getElementById('custom-pagination-container')) {
+            const paginationContainer = document.createElement('div');
+            paginationContainer.id = 'custom-pagination-container';
             
-            // --- SETTING LINK & TEKS DI SINI ---
-            btnLink.href = '/hasil'; // Ganti '/hasil' dengan URL halaman tujuan Anda
-            btnLink.innerHTML = 'Lihat Semua Pasaran <i class="bi bi-arrow-right-circle-fill"></i>';
-            // -----------------------------------
+            // --- GANTI URL DI BAGIAN href="..." SESUAI DENGAN LINK HALAMAN ANDA ---
+            paginationContainer.innerHTML = `
+                <a href="/halaman-sebelumnya" class="page-link-custom"><i class="bi bi-chevron-left"></i> Prev</a>
+                <a href="/halaman-1" class="page-link-custom active">1</a>
+                <a href="/halaman-2" class="page-link-custom">2</a>
+                <a href="/halaman-3" class="page-link-custom">3</a>
+                <a href="/halaman-selanjutnya" class="page-link-custom">Next <i class="bi bi-chevron-right"></i></a>
+            `;
+            // ----------------------------------------------------------------------
             
-            // Menambahkan tombol ke bagian paling bawah tabel
-            parent.appendChild(btnLink);
+            // Menambahkan pagination ke bagian paling bawah tabel
+            parent.appendChild(paginationContainer);
         }
 
     });
