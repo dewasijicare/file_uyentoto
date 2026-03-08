@@ -7,7 +7,7 @@
             linkRTP: "https://rtpuyentoto.online/", 
             imgRTP: "https://cdn.jsdelivr.net/gh/dewasijicare/file_uyentoto@53d447bf4ad0c8dec5b75118f6159edc54bdb2a8/RTP.webp",
             
-            linkWA: "/",
+            linkWA: "https://api.whatsapp.com/send/?phone=%2B6283879353124",
             imgWA: "https://cdn.jsdelivr.net/gh/dewasijicare/file_uyentoto@53d447bf4ad0c8dec5b75118f6159edc54bdb2a8/WA.webp",
             
             linkPrediksi: "/",
@@ -140,4 +140,5 @@
     });
 
 })();
+
 
