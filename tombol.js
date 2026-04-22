@@ -5,7 +5,7 @@
         // Link RTP sudah disesuaikan. Jangan lupa sesuaikan juga link WA dan Prediksi di bawah ini:
         const config = {
             linkRTP: "https://rtpuyentoto.online/",
-            linkWA: "https://wa.me/6281234567890", // <-- Ganti dengan nomor WhatsApp Uyentoto Anda
+            linkWA: "https://wa.me/6282261388104", // <-- Ganti dengan nomor WhatsApp Uyentoto Anda
             linkPrediksi: "/prediksi"              // <-- Ganti dengan URL halaman Prediksi Togel Anda
         };
 
